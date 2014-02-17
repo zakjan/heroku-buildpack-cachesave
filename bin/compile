@@ -8,10 +8,28 @@ CACHE_DIR=$2
 
 
 echo "=====> Caching files for future builds"
+mkdir -p ${CACHE_DIR}
 
 for FILENAME in `cat ${BUILD_DIR}/.buildcache`; do
-  if [[ -n ${FILENAME} && -e ${BUILD_DIR}/${FILENAME} ]]; then
-    echo "       ${FILENAME}"
-    cp -r ${BUILD_DIR}/${FILENAME} ${CACHE_DIR}/
+  # skip empty lines
+  if ! [ ${FILENAME} ]; then
+    continue
   fi
+
+  SRC=${BUILD_DIR}/${FILENAME}
+  DEST=${CACHE_DIR}/${FILENAME}
+
+  # skip non-existing files
+  if ! [ -e ${SRC} ]; then
+    continue
+  fi
+
+  # create directory structure
+  mkdir -p ${DEST}
+  rm -r ${DEST}
+
+  # copy files to cache
+  cp -r ${SRC} ${DEST}
+
+  echo "       ${FILENAME}"
 done
