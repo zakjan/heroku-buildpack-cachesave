@@ -10,7 +10,7 @@ CACHE_DIR=$2
 echo "=====> Caching files for future builds"
 
 for FILENAME in `cat ${BUILD_DIR}/.buildcache`; do
-  if [ -n ${FILENAME} && -e ${BUILD_DIR}/${FILENAME} ]; then
+  if [[ -n ${FILENAME} && -e ${BUILD_DIR}/${FILENAME} ]]; then
     echo "       ${FILENAME}"
     cp -r ${BUILD_DIR}/${FILENAME} ${CACHE_DIR}/
   fi
