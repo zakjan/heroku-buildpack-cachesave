@@ -16,11 +16,14 @@ for FILENAME in `cat ${BUILD_DIR}/.buildcache`; do
     continue
   fi
 
+  echo "       ${FILENAME}"
+
   SRC=${BUILD_DIR}/${FILENAME}
   DEST=${CACHE_DIR}/${FILENAME}
 
   # skip non-existing files
   if ! [ -e ${SRC} ]; then
+    echo "       - not found"
     continue
   fi
 
@@ -31,5 +34,5 @@ for FILENAME in `cat ${BUILD_DIR}/.buildcache`; do
   # copy files to cache
   cp -r ${SRC} ${DEST}
 
-  echo "       ${FILENAME}"
+  echo "       - ok, copied"
 done
